@@ -88,13 +88,23 @@ resource "aws_security_group_rule" "web_sg_22in" {
 	security_group_id = "${aws_security_group.web_sg.id}"
 }
 
-# Rule to allow web servers to talk via port 0080 to public (load balancer) subnet only
+# Rule to allow web servers to talk via port 8000 to public (load balancer) subnet only
 resource "aws_security_group_rule" "web_sg_8000in" {
 	type            = "ingress"
 	from_port       = 8000 
 	to_port         = 8000
 	protocol        = "tcp"
 	cidr_blocks		= ["0.0.0.0/0"]
+	security_group_id = "${aws_security_group.web_sg.id}"
+}
+
+# Rule to allow web servers to talk via port 3306 to public
+resource "aws_security_group_rule" "web_sg_3306in" {
+	type            = "ingress"
+	from_port       = 3306
+	to_port         = 3306
+	protocol        = "tcp"
+	cidr_blocks		= ["${var.publicCidr}"]
 	security_group_id = "${aws_security_group.web_sg.id}"
 }
 
@@ -112,6 +122,9 @@ data "template_file" "webuserdata" {
   count = "${var.instCount}"
   template = "${file("./webuserdata.sh")}"
   vars {
-    VAULT_IP = "${element(aws_instance.vault.*.private_ip, count.index)}"
+    VAULT_PRIVATE_IP = "${element(aws_instance.vault.*.private_ip, count.index)}"
+	DB_NAME = "${var.projectName}${var.stageName}db"
+	DB_VAULT_USERNAME = "vault"
+	DB_VAULT_PASSWORD = "vaultpass"
   }
 }

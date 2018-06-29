@@ -4,6 +4,11 @@
 
 yum update -y
 
+############################################################################
+# Install vault and consul
+
+# Note, consul running in single mode (non clustered mode and will not have persistent storage
+
 # Install Vault
 wget https://releases.hashicorp.com/vault/0.10.3/vault_0.10.3_linux_amd64.zip
 unzip -j vault_*_linux_amd64.zip -d /usr/local/bin
@@ -105,3 +110,14 @@ systemctl enable vault
 # Check the vault server status
 export VAULT_ADDR=http://127.0.0.1:8200
 /usr/local/bin/vault status
+
+##########################################################
+# Create a Lab User with password access
+
+# Add a user with a password for lab users to ssh in
+useradd labuser -G sudoers
+echo "password" |passwd labuser --stdin
+# enable password logins over ssh (so that we dont have to give ssh keys to lab users)
+sed -i.bak s/"^PasswordAuthentication no"/"PasswordAuthentication yes"/ /etc/ssh/sshd_config
+service sshd restart
+
