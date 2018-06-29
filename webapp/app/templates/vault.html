@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class=container>
+
+	<div class=jumbotron>
+		<h1>Vault Credentials</h1>
+		<p>WARNING: in any normal universe, this would be incredibliy secret information and
+		we would never post it to a web page. But in this lab, we are displaying this data
+		to demonstrate how vault dynamically creates database credentials</p>
+	</div>
+	<p>HOSTNAME    : {{ data["HOSTNAME"] }} </p>
+	<p>VAULT_ADDR  : {{ data["VAULT_ADDR"] }} </p>
+	<p>VAULT_NONCE : {{ data["VAULT_NONCE"] }} </p>
+	<p>VAULT_STATUS : <span class="text-{% if data["VAULT_STATUS"] == "authenticated" %}success{% else %}danger{% endif %}">{{ data["VAULT_STATUS"] }}</span></p>
+	<p>DB_HOST     : {{ creds["db_host"] }} </p>
+	<p>DB_NAME     : {{ creds["db_name"] }} </p>
+	<p>DB_PORT     : {{ creds["db_port"] }} </p>
+	<p>DB_USERNAME : {{ creds["db_username"] }} </p>
+	<p>DB_PASSWORD : {{ creds["db_password"] }} </p>
+	<p>Lease Id    : {{ creds["lease_id"] }} </p>
+	<p>Lease Duration(min)  : {{ creds["lease_duration"]/60 }} </p>
+	<p>Login Test Results   : {% if testResult == 0 %}<span class="text-success">Successful</span>{% else %}<span class="text-danger">Failed</span>{% endif %}</p>
+
+{% endblock %}
