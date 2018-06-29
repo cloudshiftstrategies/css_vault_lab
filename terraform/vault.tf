@@ -38,14 +38,34 @@ resource "aws_security_group" "vault_sg" {
     }
 }
 
-# Rule to allow app servers to talk to us via port 80 
-resource "aws_security_group_rule" "vault_sg_80in" {
+# Rule to allow app servers to talk to us via vault port 8200
+resource "aws_security_group_rule" "vault_sg_8200in" {
     type            = "ingress"
     from_port       = 8200
     to_port         = 8200
     protocol        = "tcp"
     cidr_blocks     = ["0.0.0.0/0"]
     security_group_id = "${aws_security_group.vault_sg.id}"
+}
+
+# Rule to allow app servers to talk to us via consul port 8200
+#resource "aws_security_group_rule" "vault_sg_8500in" {
+#  type            = "ingress"
+#  from_port       = 8500
+#  to_port         = 8500
+#  protocol        = "tcp"
+#  cidr_blocks     = ["0.0.0.0/0"]
+#  security_group_id = "${aws_security_group.vault_sg.id}"
+#}
+
+# Rule to allow app servers to talk to us via ssh
+resource "aws_security_group_rule" "vault_sg_22in" {
+  type            = "ingress"
+  from_port       = 22
+  to_port         = 22
+  protocol        = "tcp"
+  cidr_blocks     = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.vault_sg.id}"
 }
 
 # Rule to allow vault server to talk out to the world

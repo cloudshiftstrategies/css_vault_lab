@@ -26,12 +26,52 @@ mv iacapp/* /var/www/html
 cd ~/ && rm -rf /tmp/iac_lab
 chmod 755 -R /var/www/html
 
-# INstall the python requirements for the web application
+# Install the python requirements for the web application
 pip install -r /var/www/html/requirements.txt
 
 # Remove the unnessesary (possibly insecure) libraries after the pip install done above
 yum -qqy remove gcc python-pip mysql-devel python-devel git
 
+# Set the vault IP
+echo "VAULT_IP = ${VAULT_IP}" > /VAULT_IP.txt
+
 # Start Flask server
-cd /var/www/html
-sudo -u flask python run.py &
+#cd /var/www/html
+#sudo -u flask python run.py &
+
+# Create the startup script
+cat <<EOF | sudo tee /usr/lib/systemd/system/flask.service
+[Unit]
+Description=Flask Web service
+After=network-online.target
+
+[Service]
+User=flask
+Group=daemon
+PrivateDevices=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=read-only
+SecureBits=keep-caps
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+NoNewPrivileges=yes
+ExecStart=/usr/bin/python /var/www/html/run.py
+KillSignal=SIGINT
+TimeoutStopSec=30s
+Restart=on-failure
+StartLimitInterval=60s
+StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Start the vault daemon
+systemctl daemon-reload
+systemctl start flask
+systemctl enable flask
+
+# Check the vault server status
+export VAULT_ADDR=http://127.0.0.1:8200
+/usr/local/bin/vault status

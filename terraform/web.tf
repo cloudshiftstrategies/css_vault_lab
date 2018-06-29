@@ -8,8 +8,12 @@ resource "aws_instance" "webInst" {
   instance_type = "${var.webInstanceType}"
   subnet_id = "${aws_subnet.public_subnet.id}"
   iam_instance_profile = "${aws_iam_instance_profile.web_profile.id}"
+  user_data = "${element(data.template_file.webuserdata.*.rendered, count.index)}"
+  vpc_security_group_ids = ["${aws_security_group.web_sg.id}"]
+  key_name = "${aws_key_pair.public_key.key_name}"
   tags {
     Name = "${count.index}-web-${var.projectName}-${var.stageName}-inst"
+    VaultIP = "${element(aws_instance.vault.*.private_ip, count.index)}"
   }
 }
 
@@ -104,3 +108,10 @@ resource "aws_security_group_rule" "web_sg_ALLout" {
 	security_group_id = "${aws_security_group.web_sg.id}"
 }
 
+data "template_file" "webuserdata" {
+  count = "${var.instCount}"
+  template = "${file("./webuserdata.sh")}"
+  vars {
+    VAULT_IP = "${element(aws_instance.vault.*.private_ip, count.index)}"
+  }
+}
