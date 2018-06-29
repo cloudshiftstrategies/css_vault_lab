@@ -46,6 +46,10 @@ def getDbCreds(VAULT_ROLE="web-role"):
     try: result = vaultClient.auth('/v1/auth/aws-ec2/login', json=auth_params)
     except: return creds # we failed to authenticate to vault for some reason
 
+    #creds['db_host'] = "122.0.0.1"
+    #creds['db_port'] = "3306"
+    #creds['db_name'] = "vaultlabdb"
+
     # Get database information from vault
     request = (vaultClient.read('secret/mysql'))
     creds['db_host'] = request['data']['host']
@@ -53,7 +57,7 @@ def getDbCreds(VAULT_ROLE="web-role"):
     creds['db_name'] = request['data']['database']
 
     # get a database username and password from vault
-    request = (vaultClient.read('mysql/creds/readwrite'))
+    request = (vaultClient.read('database/creds/readwrite'))
     creds['db_username'] = request['data']['username']
     creds['db_password'] = request['data']['password']
     creds['lease_id'] = request['lease_id']

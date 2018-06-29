@@ -19,12 +19,12 @@ rm -rf /var/www/html/* /tmp/iac_lab
 
 # checkout our code from github
 cd /tmp
-git clone http://github.com/cloudshiftstrategies/iac_lab
-cd iac_lab
+git clone http://github.com/cloudshiftstrategies/css_vault_lab
+cd css_vault_lab
 
 # Move the web application into the web directory
-mv iacapp/* /var/www/html
-cd ~/ && rm -rf /tmp/iac_lab
+mv webapp/* /var/www/html
+cd ~/ && rm -rf /tmp/css_vault_lab
 chmod 755 -R /var/www/html
 
 # Install the python requirements for the web application
