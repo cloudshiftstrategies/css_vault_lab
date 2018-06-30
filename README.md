@@ -137,7 +137,8 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
     * Enter the following vault command:
         ```
         vault auth enable aws
-        vault write auth/aws-ec2/role/web-role \
+        vault write auth/aws/role/web-role \
+            auth_type=ec2 \
             policies=web-policy \
             bound_iam_instance_profile_arn=arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
         ```
