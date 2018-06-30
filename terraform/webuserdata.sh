@@ -70,7 +70,7 @@ systemctl enable flask
 # Configure SSH Helper for Vault One Time Passwords
 
 # Create a lab unix user account
-useradd labuser -G sudoers
+useradd labuser -G wheel
 # Set simple password
 #echo "password" |passwd labuser --stdin
 # enable password logins over ssh (so that we dont have to give ssh keys to lab users)
