@@ -43,7 +43,7 @@ def getDbCreds(VAULT_ROLE="web-role"):
         'pkcs7': PKCS7,
         'nonce': VAULT_NONCE,
     }
-    try: result = vaultClient.auth('/v1/auth/aws-ec2/login', json=auth_params)
+    try: result = vaultClient.auth('/v1/auth/aws/login', json=auth_params)
     except: return creds # we failed to authenticate to vault for some reason
 
     #creds['db_host'] = "122.0.0.1"

@@ -140,5 +140,6 @@ mysqladmin -u root password R00tPassword
 mysql -u root -p'R00tPassword' << EOF
 GRANT ALL PRIVILEGES ON *.* TO 'vaultadmin'@'%' IDENTIFIED BY 'vaultadminpassword' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
+CREATE DATABASE vaultlabdb;
 EOF
 

@@ -92,7 +92,7 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
         ```
         vault write database/roles/readwrite \
             db_name=mysql \
-            creation_statements="CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';GRANT ALL ON vaultlabdb.* TO '{{name}}'@'%';" \
+            creation_statements="CREATE USER '{{name}}'@'localhost' IDENTIFIED BY '{{password}}';GRANT ALL ON vaultlabdb.* TO '{{name}}'@'localhost';" \
             default_ttl="30m" \
             max_ttl="24h"
         ```
@@ -128,15 +128,16 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
             path "secret/mysql*" {
                capabilities = ["read"]
             }
-            path "mysql/creds/readwrite" {
+            path "database/creds/readwrite" {
                capabilities = ["read"]
             }
             ``` 
 2. Enable EC2 auth method
+    * Access > Auth Methods > Enable new method > Select Type: AWS > Enable Method
+        
     * Open Vault Web CLI by clicking the ">_" button in top right of vault UI
     * Enter the following vault command:
         ```
-        vault auth enable aws
         vault write auth/aws/role/web-role \
             auth_type=ec2 \
             policies=web-policy \
@@ -145,6 +146,15 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
         Where *bound_iam_instance_profile_arn* is the amazon resource name of the IAM instance
         profile that require be attached to the web instance to authenticate with vault.
         See `terraform output` WEB_PROFILE_ARN for this information.
+ 
+3. Check web application
+    * open browser to http://z.z.z.z:8000 
+       
+       where z.z.z.z is public IP address of web server
+       See `terraform output` WEB_PUBLIC_IP for this information
+       
+vault list auth/aws/identity-whitelist
+vault delete auth/aws/identity-whitelist/i-xxxx
         
 ## Lesson 5. ssh one time passwords
 

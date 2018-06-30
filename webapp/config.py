@@ -2,18 +2,18 @@
 import os
 
 # Title of the site
-SITE_TITLE = 'Infrastructure as Code Lab'
+SITE_TITLE = 'Cloudshift Vault Lab'
 # The URL for static files/images
 STATIC_URL = 'https://s3-us-west-2.amazonaws.com/flaskdockerlab-static/'
 # The name of the
 FAV_ICON = STATIC_URL + 'docker-icon.png'
-FAV_ICON = 'https://chocolatey.org/content/packageimages/terraform.0.10.8.png'
+FAV_ICON = 'https://www.datocms-assets.com/2885/1506457082-blog-vault-list.svg"
+LAB_BLOG_URL = 'https://github.com/cloudshiftstrategies/css_vault_lab'
 
 # Pages to show on the nav menu (provide a url or route)
 PAGES=[
-    {'title':'Lab Blog',
-        'url':'https://www.cloudshiftstrategies.com/iacLab.html'},
-    {'title':'Load Gen','route':'loadgen'},
+    {'title':'Lab Repo',
+        'url':'https://github.com/cloudshiftstrategies/css_vault_lab'},
     {'title':'Vault Credentials','route':'vault'},
     {'title':'Database','route':'database'},
     ]

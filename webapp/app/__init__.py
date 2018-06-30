@@ -73,7 +73,7 @@ def database():
         cursor.close()
         cursor = db.cursor()
         # The authors table doesnt exist, load it with data so we have something to look at
-        filename="dbload.sql"
+        filename="/var/www/html/dbload.sql"
         f = open(filename, 'r')
         loadQuery = " ".join(f.readlines())
         cursor.execute(loadQuery)

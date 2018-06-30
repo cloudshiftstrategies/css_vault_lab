@@ -36,7 +36,7 @@ if not os.environ.has_key('VAULT_NONCE'):
 		}
 	try:
 		# Attempt the login and get the nonce
-		response = vaultClient.auth('/v1/auth/aws-ec2/login', json=params)
+		response = vaultClient.auth('/v1/auth/aws/login', json=params)
 		# Extract the nonce from the api response (in json format)
 		nonce = response['auth']['metadata']['nonce']
 		# Write the env variables
