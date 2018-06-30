@@ -75,7 +75,7 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
  1. Enable database secrets backend
     * Secrets > Enable new engine > Database > Enable Engine
  
- 2. Configure the connection to the mysql server and allow the role called "readwrite" to access it
+ 2. Configure vault's connection to the mysql server and allow the role called "readwrite" to access it
     * Open Vault Web CLI by clicking the ">_" button in top right of vault UI
     * Enter the following vault command:
         ```
@@ -132,7 +132,7 @@ user:vaultadmin with password:vaultadminpassword has been created using the foll
                capabilities = ["read"]
             }
             ``` 
-2. Enable EC2
+2. Enable EC2 auth method
     * Open Vault Web CLI by clicking the ">_" button in top right of vault UI
     * Enter the following vault command:
         ```
