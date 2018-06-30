@@ -7,7 +7,7 @@ SITE_TITLE = 'Cloudshift Vault Lab'
 STATIC_URL = 'https://s3-us-west-2.amazonaws.com/flaskdockerlab-static/'
 # The name of the
 FAV_ICON = STATIC_URL + 'docker-icon.png'
-FAV_ICON = 'https://www.datocms-assets.com/2885/1506457082-blog-vault-list.svg"
+FAV_ICON = 'https://www.datocms-assets.com/2885/1506457082-blog-vault-list.svg'
 LAB_BLOG_URL = 'https://github.com/cloudshiftstrategies/css_vault_lab'
 
 # Pages to show on the nav menu (provide a url or route)
