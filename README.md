@@ -4,14 +4,14 @@ Lab organizers, see [labadmin.md](./labadmin.md) for instructions about setting 
  
 # Lab overview 
 
-This lab is designed to very quickly demonstrate several of the features of [Hashicorp Vault](www.vaultproject.io)
+This lab is designed to very quickly demonstrate several of the features of [Hashicorp Vault](http://www.vaultproject.io)
 including simple secrets engine (key/value pairs), dynamic database secrets, ssh one-time passwords and maybe
 more in the future (i.e. github authentication and Transit encryption as a service)
 
 ## Resources
 Each lab user will have a dedicated hashicorp [vault](http://vaultproject.io) server with a 
-[consul](httpd://consul.io) storage backend. Each lab user will also have a dedicated linux web server
-running a simple [flask](flask.pocoo.org) application which uses a mysql database on the same server.
+[consul](http://consul.io) storage backend. Each lab user will also have a dedicated linux web server
+running a simple [flask](http://flask.pocoo.org) application which uses a mysql database on the same server.
 All of this infrastructure is hosted in AWS and uses Hashicorp's open source products.
 
 ![drawing.png](./static/drawing.png)

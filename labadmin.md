@@ -55,3 +55,9 @@ number of lab attendees you have.
       Web Profile ARN: arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
  
     ```
+    
+  3. When the lab is complete, destroy the resources
+  
+    ```
+    terraform destory
+    ```
