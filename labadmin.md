@@ -36,19 +36,22 @@ number of lab attendees you have.
     terraform apply -auto-approve
     ``` 
     
- 2. collect lab public IP addresses from terrafrom output
-    * TODO: create a script to format this output for lab organizer
-    ```
-    $ terraform output
+ 2. collect and print lab public IP addresses from terrafrom output using the python ./fmtOutput.py script
  
-    VAULT_PRIVATE_IP = [
-        10.0.0.74
-    ]
-    WEB_PRIVATE_IP = [
-        10.0.0.16
-    ]
-    WEB_PUBLIC_IP = [
-        18.222.117.140
-    ]
-    WEB_PROFILE_ARN = arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
+    ```
+    css_vault_lab/terraform $ ./lab_output.py 
+    Lab User 1:
+     Vault Public  IP: 18.188.127.201 (http://18.188.127.201:8200)
+       Web Private IP: 10.0.0.13
+       Web Public  IP: 18.216.38.230 (http://18.216.38.230:8000)
+         Web ssh user: labuser `ssh labuser@18.216.38.230`
+      Web Profile ARN: arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
+
+    Lab User 2:
+     Vault Public  IP: 18.222.20.111 (http://18.222.20.111:8200)
+       Web Private IP: 10.0.0.168
+       Web Public  IP: 18.219.24.215 (http://18.219.24.215:8000)
+         Web ssh user: labuser `ssh labuser@18.219.24.215`
+      Web Profile ARN: arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
+ 
     ```

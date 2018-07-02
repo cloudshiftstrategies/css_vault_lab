@@ -1,7 +1,7 @@
 # variables.tf – commonly configured parameters for our environment (i.e. projectName)
 
 variable "instCount" {
-	default = "1"
+	default = "2"
 }
 
 #################################################
