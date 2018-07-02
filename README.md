@@ -1,51 +1,37 @@
-# css_vault_lab
+# css_vault_lab/README.md
 
-## Lab organizer
-1. deploy resources
-    ```
-    # clone the repo
-    git clone git@github.com:cloudshiftstrategies/css_vault_lab.git
-    
-    # create an ssh-key for this project
-    cd css_vault_lab/terraform/scripts
-    ./create_sshkey.sh
-    
-    # set AWS_PROFILE so you can provision AWS resources
-    export AWS_PROFILE=xxxx
-    
-    # Create an s3 bucket for your state-file
-    ./create_s3bucket.py
-    
-    # edit the number of lab instances required in variables.tf - instCount
-    cd ../
-    vi variables.tf
-    
-    # deploy your infrastructure!
-    terraform init
-    terraform apply -auto-approve
-    ``` 
-    
- 2. collect lab public IP addresses from terrafrom output
-    * TODO: create a script to format this output for lab organizer
-    ```
-    $ terraform output
+## Lab organizers
+
+See [labadmin.md](./labadmin.md) for instructions about setting up this lab
  
-    VAULT_PRIVATE_IP = [
-        10.0.0.74
-    ]
-    WEB_PRIVATE_IP = [
-        10.0.0.16
-    ]
-    WEB_PUBLIC_IP = [
-        18.222.117.140
-    ]
-    WEB_PROFILE_ARN = arn:aws:iam::603006933259:instance-profile/vaultlab-dev-web-profile
-    ```
+# Lab overview 
+
+This lab is designed to very quickly demonstrate several of the features of [Hashicorp Vault](www.vaultproject.io)
+including simple secrets engine (key/value pairs), dynamic database secrets, ssh one-time passwords and maybe
+more in the future (i.e. Transit)
+
+## Resources
+Each lab user will have a dedicated hashicorp [vault](http://vaultproject.io) server with a 
+[consul](httpd://consul.io) storage backend. Each lab user will also have a dedicated linux web server
+running a simple [flask](flask.pocoo.org) application which access a mysql database on the same server.
+All of this infrastructure is hosted in AWS and uses Hashicorp's open source products
+
+<a img src=./static/drawing.png>
+
+Your lab facilitator will provide you with the IP addresses for 
+* PUBLIC_WEB_IP - this is the public IP address of the web server (y.y.y.y)
+* PRIVATE_WEB_IP - this is the private IP address of the web server (10.0.0.y)
+* PUBLIC_VAULT_IP - this is the public IP address of the vault server (x.x.x.x)
+* WEB_PROFILE_ARN - this is the AWS resource name for the policy that allows EC2 to access vault
  
 # Lab Instructions   
- 
+
 ### Lesson 1. Unseal vault 
- 1. Connect to the vault instance IP via browswer on port 8200
+
+Your lab instance
+
+
+ 1. Connect to the vault instance IP via browswer on vault port 8200
     * Point browser to http://x.x.x.x:8200 where x.x.x.x is the public IP of the vault server
     * Initialize vault with 3 keys and 2 required to unseal
     * Download keys to local PC
