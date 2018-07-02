@@ -36,13 +36,21 @@ is to unseal the vault
     * Point browser to http://x.x.x.x:8200 where x.x.x.x is the public IP of the vault server
     * Initialize vault with 5 keys and 3 key threshhold required to unseal
         ![initialize vault](./static/Selection_114.png)
+        
     * Initialization complete
+    
         ![download keys](./static/Selection_115.png)
+        
     * Download keys to your local PC
+    
         ![download keys](./static/Selection_120.png)
+        
     * Unseal vault using 3 of 5 "keys"
+    
         ![unseal vault](./static/Selection_116.png)
+        
     * Login to vault with root_token
+    
         ![login](./static/Selection_119.png)
     
 ## Lesson 2. Generic Secrets
