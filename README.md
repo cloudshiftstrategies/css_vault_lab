@@ -16,7 +16,7 @@ Each lab user will have a dedicated hashicorp [vault](http://vaultproject.io) se
 running a simple [flask](flask.pocoo.org) application which access a mysql database on the same server.
 All of this infrastructure is hosted in AWS and uses Hashicorp's open source products
 
-<a img src=./static/drawing.png>
+![drawing.png](./static/drawing.png)
 
 Your lab facilitator will provide you with the IP addresses for 
 * PUBLIC_WEB_IP - this is the public IP address of the web server (y.y.y.y)
