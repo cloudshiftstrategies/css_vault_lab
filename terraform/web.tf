@@ -10,7 +10,7 @@ resource "aws_instance" "webInst" {
   iam_instance_profile = "${aws_iam_instance_profile.web_profile.id}"
   user_data = "${element(data.template_file.webuserdata.*.rendered, count.index)}"
   vpc_security_group_ids = ["${aws_security_group.web_sg.id}"]
-  key_name = "${aws_key_pair.public_key.key_name}"
+  #key_name = "${aws_key_pair.public_key.key_name}"
   tags {
     Name = "${count.index}-web-${var.projectName}-${var.stageName}-inst"
     VaultIP = "${element(aws_instance.vault.*.private_ip, count.index)}"
