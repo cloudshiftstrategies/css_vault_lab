@@ -4,6 +4,8 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+s3state.tf
+terraform/ssh.tf
 
 # .tfvars files
 *.tfvars

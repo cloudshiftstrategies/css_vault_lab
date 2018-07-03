@@ -14,4 +14,6 @@ else
 	echo "Private Key file ${PRIVATE_KEYFILE} already exists. Existing"
 fi
 
+cp ssh.tf ../
+
 chmod 400 ${SSHDIR}/*
