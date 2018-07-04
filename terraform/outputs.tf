@@ -7,9 +7,9 @@ output "VAULT_PUBLIC_IPS" {
 output "WEB_PUBLIC_IPS" {
 	value = "${aws_instance.webInst.*.public_ip}"
 }
-#output "VAULT_PRIVATE_IPS" {
-#	value = "${aws_instance.vault.*.private_ip}"
-#}
+output "VAULT_PRIVATE_IPS" {
+	value = "${aws_instance.vault.*.private_ip}"
+}
 output "WEB_PRIVATE_IPS" {
 	value = "${aws_instance.webInst.*.private_ip}"
 }
