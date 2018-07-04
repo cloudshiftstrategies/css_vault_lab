@@ -10,7 +10,7 @@ resource "aws_instance" "vault" {
 	ami             = "${data.aws_ami.awsLinux2Ami.id}"
 	instance_type   = "${var.vaultInstanceType}"
 	subnet_id       	= "${aws_subnet.public_subnet.id}"
-	#key_name        	= "${aws_key_pair.public_key.key_name}"
+	key_name        	= "${aws_key_pair.public_key.key_name}"
 	iam_instance_profile	= "${aws_iam_instance_profile.vault_iam_profile.name}"
 	vpc_security_group_ids	= ["${aws_security_group.vault_sg.id}"]
 	user_data		= "${file("vaultuserdata.sh")}"
