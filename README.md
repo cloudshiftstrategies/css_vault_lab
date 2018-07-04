@@ -196,20 +196,18 @@ roles in AWS.
 
     * go to the Vault Credentials tab. 
         
-<<<<<<< HEAD
         Notice that if you refresh the page, the VAULT_STATUS is "Vault is sealed" and
-				the web app doesn't authenticate with vault and cant get db credentials.
+		the web app doesn't authenticate with vault and cant get db credentials.
         When this web application starts up, it tries logging into vault. At that time, vault
         was sealed and the login failed.
 				
-				Additionally, vault is configured to not allow subsequent logins for security reasons - so
-				that other instances cant masquerade themselves as our instance.
-=======
+		Additionally, vault is configured to not allow subsequent logins for security reasons - so
+		that other instances cant masquerade themselves as our instance.
+
         Notice that the web app didn't authenticate with vault and cant get db credentials.
         When this web application starts up, it tries logging into vault once. At that time, vault
         was sealed and the login failed. Additionally, vault is configured to not allow subsequent 
         logins for security, so that other instances cant masquerade themselves as our instance.
->>>>>>> f6964ecb64d36a7e8e119a28b693cb40d7b2306e
         This works really well for ephemeral web applications that have a short life. 
         
         In the real world, to resolve this, we'd probably just terminate the web server and 
