@@ -4,8 +4,8 @@ Lab organizers, see [labadmin.md](./labadmin.md) for instructions about setting 
  
 # Lab overview 
 
-This lab is designed to very quickly demonstrate several of the features of [Hashicorp Vault](http://www.vaultproject.io)
-including simple secrets engine (key/value pairs), dynamic database secrets, ssh one-time passwords and maybe
+This lab is designed to very quickly demonstrate several features of [Hashicorp Vault](http://www.vaultproject.io)
+including the default secrets engine (key/value pairs), dynamic database secrets, ssh one-time passwords and maybe
 more in the future (i.e. github authentication and Transit encryption as a service)
 
 ## Resources
@@ -16,7 +16,7 @@ All of this infrastructure is hosted in AWS and uses Hashicorp's open source pro
 
 ![drawing.png](./static/drawing.png)
 
-Your lab facilitator will provide you with the IP addresses for this lab in a format similar to:
+Your lab facilitator will provide IP addresses for this lab in a format similar to:
 
     Lab User 2:
       Vault Public IP: 18.222.20.111 (http://18.222.20.111:8200)
@@ -30,7 +30,7 @@ Your lab facilitator will provide you with the IP addresses for this lab in a fo
 ### Lesson 1. Unseal vault 
 
 Your lab vault server has been installed, but the secure vault has not yet been initialized. The first step
-is to unseal the vault
+is to initialize and unseal the vault
 
  1. Unseal the vault
     * Point browser to http://x.x.x.x:8200 where x.x.x.x is the public IP of the vault server
@@ -60,7 +60,7 @@ standard "secrets" backend, which is enabled by default. Much of vault is config
 CLI and the web UI gives us a handy console with which to configure vault.
 
 The secrets we enter here will be used by our web server to determine information about 
-the database server. The secrets here arent particularly sensitive, but it is handy to 
+the database server. These secrets arent particularly sensitive, but it is handy to 
 store this configuration information in a centralized and secure location so that maintaining 
 it is much easier and safer than storing in config files on the server.
     
@@ -90,8 +90,8 @@ would be set by a DBA, emailed to the web admin who stores the passwords on the 
 file. This is insecure for several reasons
 1. It is very hard to rotate passwords when they are stored in static configu files
 2. The database credentials are passed around, version controlled and even backed up in an insecure fashion
-2. If the web server is compromised, so is the database and all of its data
-3. Since the passwords are not easily rotated (see #1 above) and all web servers often use the same
+3. If the web server is compromised, so is the database and all of its data
+4. Since the passwords are not easily rotated (see #1 above) and all web servers often use the same
    username and password. In an incident response situation, is not easy to isolate which web server has
    been compromised and disable its credentials without taking the entire application offline.
    
@@ -134,7 +134,7 @@ First, we must enable a new secrets backend.
             max_ttl="24h"
         ```
     
- 4. Test that you can read dynamic database credentials as the root user
+ 4. Test that you can read dynamic database credentials
     * Enter the following vault command:
         ```
         vault read database/creds/readwrite
@@ -177,7 +177,6 @@ roles in AWS.
             ``` 
 2. Enable AWS authentication method
     * Access > Auth Methods > Enable new method > Select Type: AWS > Enable Method
-        
     * Open Vault Web CLI by clicking the ">_" button in top right of vault UI
     * Enter the following vault command:
         ```
@@ -198,9 +197,9 @@ roles in AWS.
     * go to the Vault Credentials tab. 
         
         Notice that the web app didn't authenticate with vault and cant get db credentials.
-        When this web application starts up, it tries logging into vault. At that time, vault
+        When this web application starts up, it tries logging into vault once. At that time, vault
         was sealed and the login failed. Additionally, vault is configured to not allow subsequent 
-        logins for security so that other instances cant masquerade themselves as our instance.
+        logins for security, so that other instances cant masquerade themselves as our instance.
         This works really well for ephemeral web applications that have a short life. 
         
         In the real world, to resolve this, we'd probably just terminate the web server and 
