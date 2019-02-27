@@ -1,7 +1,7 @@
 # variables.tf – commonly configured parameters for our environment (i.e. projectName)
 
 variable "instCount" {
-	default = "1"
+	default = "8"
 }
 
 #################################################
@@ -76,6 +76,7 @@ variable "dbBackupRetention" {
 # Data Lookups
 data "aws_ami" "awsLinux2Ami" {
 	most_recent = true
+	owners = ["amazon"]
 	filter {
 		name = "owner-alias"
 		values = ["amazon"]
