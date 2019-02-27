@@ -88,7 +88,7 @@ Our web server is going to need to access the database server. To do so requires
 server have some credentials (username & password) to access the database. Typically this information
 would be set by a DBA, emailed to the web admin who stores the passwords on the web server in a configuration
 file. This is insecure for several reasons
-1. It is very hard to rotate passwords when they are stored in static configu files
+1. It is very hard to rotate passwords when they are stored in static config files
 2. The database credentials are passed around, version controlled and even backed up in an insecure fashion
 3. If the web server is compromised, so is the database and all of its data
 4. Since the passwords are not easily rotated (see #1 above) and all web servers often use the same
