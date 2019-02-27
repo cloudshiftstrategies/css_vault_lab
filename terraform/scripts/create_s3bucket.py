@@ -3,6 +3,7 @@
 # create_s3bucket.py - creates a unique s3 bucket in which to store state file.
 # updates s3state.tf
 
+from __future__ import print_function
 import boto3, uuid, sys, hcl
 from botocore.exceptions import ClientError
 
@@ -13,7 +14,7 @@ variablesFile='../variables.tf'
 
 # Helper functions
 def createBucket(bucketName, regionName):
-    print "Trying to create Bucket: %s in Region: %s" %(bucketName, regionName)
+    print("Trying to create Bucket: %s in Region: %s" %(bucketName, regionName))
     try:
         # try to create a bucket with the name in the config file
         if regionName == 'us-east-1':
@@ -24,15 +25,15 @@ def createBucket(bucketName, regionName):
     except (ClientError) as e:
         # If it is BucketAlreadyExists error, handle it
         if e.response['Error']['Code'] == 'BucketAlreadyExists':
-            print "    Bucket: %s exists in another AWS account" %bucketName
+            print("    Bucket: %s exists in another AWS account" %bucketName)
             return 1
         else:
             # We dont know what the error was, lets print error and exit
-            print "Fatal Error:"
-            print e
+            print("Fatal Error:")
+            print(e)
             sys.exit(1)
-    print "    Successfully created Bucket: %s" %bucketName
-    print "    Enabling versioning on Bucket: %s" %bucketName
+    print("    Successfully created Bucket: %s" %bucketName)
+    print("    Enabling versioning on Bucket: %s" %bucketName)
     s3client.put_bucket_versioning(
         Bucket=bucketName,
         VersioningConfiguration={ 'Status': 'Enabled' }
@@ -42,7 +43,7 @@ def createBucket(bucketName, regionName):
 # Main program execution
 if __name__ == "__main__":
     # Open/parse the variables.tf file
-    print "Reading Var File : %s" %variablesFile
+    print("Reading Var File : %s" %variablesFile)
     with open(variablesFile) as varfile:
         variables = hcl.load(varfile)
     projectName = variables['variable']['projectName']['default']
@@ -54,12 +55,12 @@ if __name__ == "__main__":
     # Make sure the bucket name conforms to aws rules
     bucketName = bucketName.lower().replace("_","-").replace("..",".")
     keyName='tfStateFile-%s-%s' %(projectName, stageName)
-    print "       BucketName: %s" %bucketName
-    print "       Key       : %s" %keyName
-    print "       Region    : %s" %regionName
+    print("       BucketName: %s" %bucketName)
+    print("       Key       : %s" %keyName)
+    print("       Region    : %s" %regionName)
 
     # Open/parse the s3state.tf config file (need it for structure)
-    print "Reading Cfg Template : %s" %s3StateTmplFile
+    print("Reading Cfg Template : %s" %s3StateTmplFile)
     with open(s3StateTmplFile) as datafile:
         data = hcl.load(datafile)
 
@@ -70,8 +71,8 @@ if __name__ == "__main__":
         if bucketName  == bucket['Name']:
             if regionName == s3client.get_bucket_location(Bucket=bucketName)['LocationConstraint']:
                 # Were done
-                print "Bucket: %s already exists in AWS account & region" %bucketName
-                print "        Enabling versioning on Bucket: %s" %bucketName
+                print("Bucket: %s already exists in AWS account & region" %bucketName)
+                print("        Enabling versioning on Bucket: %s" %bucketName)
                 s3client.put_bucket_versioning(
                     Bucket=bucketName,
                     VersioningConfiguration={ 'Status': 'Enabled' }
@@ -80,16 +81,16 @@ if __name__ == "__main__":
 
     if bucketOk == False:
         # The bucket does not yet exist (in this account)
-        print "Bucket: %s does not exist in this AWS account & region." %bucketName
+        print("Bucket: %s does not exist in this AWS account & region." %bucketName)
 
         # Create a bucket. Try to use the bucket Name in the config file first
         while createBucket(bucketName, regionName) != 0:
             # If we are still here, we need to try a new bucket name
             bucketName = "%s-%s" %(bucketName, str(uuid.uuid1())[:8])
-            print "    Picking a different bucket name: %s" %bucketName
+            print("    Picking a different bucket name: %s" %bucketName)
 
     # Write out a new config file
-    print "Updating config file %s" %s3StateCfgFile
+    print("Updating config file %s" %s3StateCfgFile)
     data['terraform']['backend']['s3']['bucket'] = bucketName
     data['terraform']['backend']['s3']['key'] = keyName
     data['terraform']['backend']['s3']['region'] = regionName
